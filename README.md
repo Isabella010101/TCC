@@ -9,7 +9,7 @@
 
 ## 🎮 Sobre o Projeto
 
-Um jogo inspirado em Dungeons & Dragons, com mecânicas simples.
+Um jogo inspirado em Dungeons & Dragons, Potion Punch e Dinner Simulator da plataforma Roblox, com mecânicas simples.
 - Simulador
 
 - Cozinha
