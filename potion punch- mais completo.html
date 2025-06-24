@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Potion Punch Clone</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            background-color: #f0f0f0;
+        }
+        #gameArea {
+            position: relative;
+            width: 1000px;
+            height: 600px;
+            margin: 0 auto;
+            border: 2px solid #333;
+            background-color: #fff;
+            overflow: hidden;
+        }
+        .dispenser {
+            width: 80px;
+            height: 80px;
+            display: inline-block;
+            margin: 10px;
+            cursor: pointer;
+            border: 2px solid #000;
+        }
+        #redDispenser { background-color: red; }
+        #blueDispenser { background-color: blue; }
+        #yellowDispenser { background-color: yellow; }
+
+        #bowlArea {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+        }
+
+        #bowl {
+            width: 100px;
+            height: 100px;
+            background-color: brown;
+            border-radius: 50%;
+            position: relative;
+            cursor: pointer;
+        }
+
+        #innerBowl {
+            width: 80%;
+            height: 80%;
+            background-color: white;
+            border-radius: 50%;
+            position: absolute;
+            top: 10%;
+            left: 10%;
+        }
+
+        #bowlStatus {
+            margin-left: 20px;
+            font-size: 20px;
+            font-weight: bold;
+        }
+
+        .client {
+            width: 80px;
+            height: 80px;
+            background-color: pink;
+            border: 2px solid #000;
+            position: absolute;
+            top: 50px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            transition: left 1s ease;
+            cursor: pointer;
+            font-size: 12px;
+            text-align: center;
+            padding: 5px;
+        }
+
+        #trash {
+            width: 60px;
+            height: 60px;
+            background-color: gray;
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            border: 2px solid black;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
+        }
+
+        #message {
+            margin-top: 20px;
+            color: red;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Potion Punch Clone</h1>
+
+    <div id="gameArea">
+        <div id="trash">🗑️</div>
+
+        <div id="redDispenser" class="dispenser"></div>
+        <div id="blueDispenser" class="dispenser"></div>
+        <div id="yellowDispenser" class="dispenser"></div>
+
+        <div id="bowlArea">
+            <div id="bowl">
+                <div id="innerBowl"></div>
+            </div>
+            <div id="bowlStatus">Desselecionada</div>
+        </div>
+    </div>
+
+    <div id="message"></div>
+
+    <script>
+
+        // --------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        const bowl = document.getElementById('bowl');
+        const redDispenser = document.getElementById('redDispenser');
+        const blueDispenser = document.getElementById('blueDispenser');
+        const yellowDispenser = document.getElementById('yellowDispenser');
+        const innerBowl = document.getElementById('innerBowl');
+        const gameArea = document.getElementById('gameArea');
+        const messageBox = document.getElementById('message');
+        const trash = document.getElementById('trash');
+        const bowlStatus = document.getElementById('bowlStatus');
+
+        let bowlSelected = false;
+
+        // define propriedades do objeto color
+        let color = { red: 0, blue: 0, yellow: 0 };
+
+        let clients = [];
+        const maxClients = 6;
+
+        // manual
+        // const clientPositions = [100, 200, 300, 400, 500, 600];
+
+        // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+
+        // verifica se o bowl está selecionado, se estiver selecionado, passa o dado falso, e vice-versa
+        bowl.addEventListener('click', () => {
+            bowlSelected = !bowlSelected;
+
+            // função que atualiza o estado do bowl
+            updateBowlStatus();
+        });
+
+        // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // função que atualiza o estado do bowl
+        function updateBowlStatus() {
+            if (bowlSelected) {
+                bowlStatus.textContent = 'Selecionada';
+                bowlStatus.style.color = 'green';
+            } else {
+                bowlStatus.textContent = 'Desselecionada';
+                bowlStatus.style.color = 'red';
+            }
+        }
+
+        // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // dispenser de cores
+
+        
+        redDispenser.addEventListener('click', () => {
+            // verifica se bowl foi selecionado
+            if (bowlSelected) {
+
+                // se cor foi usada
+                if (color.red === 1) {
+
+                    // mensagem não aparece
+                    showMessage("Color already used!");
+
+                    // faz a verificação novamente
+                    return;
+                }
+
+                // acrescenta 1 
+                color.red += 1;
+                // ativa a função
+                verifyColor();
+
+            } else {
+
+                // nenhum bowl foi selecionado
+                showMessage("No Bowl selected!");
+            }
+        });
+
+        blueDispenser.addEventListener('click', () => {
+            if (bowlSelected) {
+                if (color.blue === 1) {
+                    showMessage("Color already used!");
+                    return;
+                }
+                color.blue += 1;
+                verifyColor();
+            } else {
+                showMessage("No Bowl selected!");
+            }
+        });
+
+        yellowDispenser.addEventListener('click', () => {
+            if (bowlSelected) {
+                if (color.yellow === 1) {
+                    showMessage("Color already used!");
+                    return;
+                }
+                color.yellow += 1;
+                verifyColor();
+            } else {
+                showMessage("No Bowl selected!");
+            }
+        });
+
+        // --------------------------------------------------------------------------------------------------------
+        // lixo
+
+        trash.addEventListener('click', () => {
+            resetBowl();
+        });
+
+
+        // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        function showMessage(msg) {
+            messageBox.textContent = msg;
+            setTimeout(() => {
+                messageBox.textContent = '';
+            }, 2000);
+        }
+
+
+        // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+
+        // função que verifica cor e chama outra função para definir a cor
+        function verifyColor() {
+            innerBowl.style.backgroundColor = getCurrentBowlColor();
+        }
+
+        // define a cor
+        function getCurrentBowlColor() {
+
+            // cada variável tem valor bool
+            const red = color.red > 0;
+            const blue = color.blue > 0;
+            const yellow = color.yellow > 0;
+
+            // se red, blue e yellow forem true, retorna marrom e coloca esse valor na outta função
+            if (red && blue && yellow) return 'brown';
+            if (red && blue) return 'purple';
+            if (red && yellow) return 'orange';
+            if (blue && yellow) return 'green';
+            if (red) return 'red';
+            if (blue) return 'blue';
+            if (yellow) return 'yellow';
+
+            return 'white';
+        }
+
+
+        // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+    
+        // função para criar novo cliente
+        function spawnClient() {
+
+            // se a quantidade de clientes for igual ou maior q a quantidade máxima, retorna, até dar falso nessa condição
+            if (clients.length >= maxClients) return;
+
+            // cria um div do cliente
+            const clientDiv = document.createElement('div');
+            // coloca a classe do div = client
+            clientDiv.classList.add('client');
+
+            // como estamo criando um novo cliente, o número índice dele vai ser exatamente o próximo número criado, a posição dele na fila. 0 clientes -> cliente 0, 1 cliente -> cliente 1, 2 clientes -> cliente 2...
+            const clientIndex = clients.length;
+
+            // onde eles vão ficar verticalmente
+            clientDiv.style.top = '100px';
+
+            // largura da tela, gameArea é a classe e offsetWidth é uma propriedade desse elemento
+            const larguraTela = gameArea.offsetWidth;
+            const spaceBetween = larguraTela / (maxClients + 1);
+            const positionLeft = spaceBetween * (clientIndex + 1);
+
+            if () {
+                
+            }
+
+            clientDiv.style.left = `${positionLeft}px`;
+
+            const possibleColors = ['red', 'blue', 'yellow', 'orange', 'green', 'purple', 'brown'];
+            const orderSize = Math.floor(Math.random() * 3) + 1;
+
+            let order = [];
+            for (let i = 0; i < orderSize; i++) {
+                const randomColor = possibleColors[Math.floor(Math.random() * possibleColors.length)];
+                order.push(randomColor);
+            }
+
+            clientDiv.dataset.order = JSON.stringify(order);
+            clientDiv.dataset.progress = "0";
+            clientDiv.textContent = order.join(', ');
+
+            gameArea.appendChild(clientDiv);
+
+            setTimeout(() => {
+                clientDiv.style.left = `${100 + clientIndex * 120}px`;
+            }, 100);
+
+            clientDiv.addEventListener('click', () => {
+                handleClientClick(clientDiv);
+            });
+
+            clients.push(clientDiv);
+        }
+
+        function handleClientClick(clientDiv) {
+            let order = JSON.parse(clientDiv.dataset.order);
+            let progress = parseInt(clientDiv.dataset.progress);
+
+            let bowlColor = getCurrentBowlColor();
+
+            if (bowlColor === order[progress]) {
+                console.log("Bebida certa:", bowlColor);
+                progress++;
+                clientDiv.dataset.progress = progress.toString();
+                resetBowl();
+
+                if (progress >= order.length) {
+                    clientDiv.style.left = '1000px';
+                    setTimeout(() => {
+                        gameArea.removeChild(clientDiv);
+                        clients.splice(clients.indexOf(clientDiv), 1);
+                        spawnClientAfterDelay();
+                    }, 1000);
+                }
+            } else {
+                showMessage("Bebida errada!");
+            }
+        }
+
+        function spawnClientAfterDelay() {
+            let delay = Math.random() * 2000 + 5000;
+            setTimeout(() => {
+                spawnClient();
+            }, delay);
+        }
+
+        function resetBowl() {
+            color = { red: 0, blue: 0, yellow: 0 };
+            verifyColor();
+        }
+
+        for (let i = 0; i < 3; i++) {
+            spawnClient();
+        }
+
+        setInterval(() => {
+            if (clients.length < maxClients) {
+                spawnClient();
+            }
+        }, Math.random() * 2000 + 5000);
+    </script>
+
+</body>
+
+<!-- acrescentar cronômetro para os clientes irem embora -->
+<!-- cliente ocupando mesmo espaço que o outro -->
+<!-- 5 minutos de dia e 5 minutos de noite -->
+<!-- dia - atender cliente -->
+<!-- noite- fazer outras coisas -->
+
+
+<script>
+
+    
+
+
+</script>
+
+
+</html>
