@@ -141,6 +141,7 @@
         // define propriedades do objeto color
         let color = { red: 0, blue: 0, yellow: 0 };
 
+        posicoesUsadas = []
         let clients = [];
         const maxClients = 6;
 
@@ -274,35 +275,61 @@
         }
 
 
+        // função para nome e posição random de cada cliente
+        function clienteRandom() {
+            const personagens = ['Thalita', 'Forg', 'Becllark', 'Alexya', 'Leandro', 'Grigas'];	
+            const clientPositions = [100, 200, 300, 400, 500, 600];
+
+            let personagemRandom
+            let clientePositionRandom
+
+
+            do {
+            
+            //posição pro personagem, gera UM space between diferente multiplicando por um numero aleatório
+            clientePositionRandom = Math.floor(Math.random() * clientPositions.length);
+
+            personagemRandom = Math.floor(Math.random() * personagens.length)
+            
+            } while (clients.includes(personagens[personagemRandom]) || posicoesUsadas.includes(clientPositions[clientePositionRandom]))
+
+            clients.push(personagens[personagemRandom])
+            posicoesUsadas.push(clientPositions[clientePositionRandom])
+
+
+            //definições de clientes
+            // cria um div do cliente
+            // const clientDiv = document.createElement('div');
+            // coloca a classe do div = client
+            // clientDiv.classList.add('client');
+
+            // clientDiv.textContent = personagens[personagemRandom];
+            // clientDiv.style.left = `${clientPositions[clientePositionRandom]}px`;
+            // clientDiv.style.top = '100px';
+
+            return {
+                nome: personagens[personagemRandom],
+                posicao: clientPositions[clientePositionRandom]
+            };
+            
+        }
+
+
+
         // -----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
     
         // função para criar novo cliente
+        // todas as configurações para cada clientes estão aqui
         function spawnClient() {
-
-            // se a quantidade de clientes for igual ou maior q a quantidade máxima, retorna, até dar falso nessa condição
             if (clients.length >= maxClients) return;
 
-            // cria um div do cliente
             const clientDiv = document.createElement('div');
-            // coloca a classe do div = client
             clientDiv.classList.add('client');
 
-            // como estamo criando um novo cliente, o número índice dele vai ser exatamente o próximo número criado, a posição dele na fila. 0 clientes -> cliente 0, 1 cliente -> cliente 1, 2 clientes -> cliente 2...
-            const clientIndex = clients.length;
-
-            // onde eles vão ficar verticalmente
+            const clienteInfo = clienteRandom(); // pega personagem e posição
+            clientDiv.textContent = clienteInfo.nome;
+            clientDiv.style.left = `${clienteInfo.posicao}px`;
             clientDiv.style.top = '100px';
-
-            // largura da tela, gameArea é a classe e offsetWidth é uma propriedade desse elemento
-            const larguraTela = gameArea.offsetWidth;
-            const spaceBetween = larguraTela / (maxClients + 1);
-            const positionLeft = spaceBetween * (clientIndex + 1);
-
-            if () {
-                
-            }
-
-            clientDiv.style.left = `${positionLeft}px`;
 
             const possibleColors = ['red', 'blue', 'yellow', 'orange', 'green', 'purple', 'brown'];
             const orderSize = Math.floor(Math.random() * 3) + 1;
@@ -313,22 +340,26 @@
                 order.push(randomColor);
             }
 
+            const textodiv = document.createElement('div');
+            textodiv.classList.add('texto');
+            textodiv.textContent = order.join(', ');
+
             clientDiv.dataset.order = JSON.stringify(order);
             clientDiv.dataset.progress = "0";
-            clientDiv.textContent = order.join(', ');
 
+            clientDiv.appendChild(textodiv);
             gameArea.appendChild(clientDiv);
-
-            setTimeout(() => {
-                clientDiv.style.left = `${100 + clientIndex * 120}px`;
-            }, 100);
 
             clientDiv.addEventListener('click', () => {
                 handleClientClick(clientDiv);
             });
 
             clients.push(clientDiv);
+
+            console.log("Cliente criado:", clienteInfo.nome, "na posição:", clienteInfo.posicao);
+
         }
+
 
         function handleClientClick(clientDiv) {
             let order = JSON.parse(clientDiv.dataset.order);
@@ -387,12 +418,6 @@
 <!-- noite- fazer outras coisas -->
 
 
-<script>
-
-    
-
-
-</script>
 
 
 </html>
