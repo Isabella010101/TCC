@@ -33,3 +33,4 @@ Depois de analisar, começamos a resolver problema no código, para fazer exatam
 Hoje, na cozinha, conseguimos resolver o primeiro item e o segundo, utilizando uma lógica nova no spawn de clientes, porém, acrescentou outro problema:
  - Só recebe 6 clientes
 
+No simulador, conseguimos melhorar a colisão do jogador com a fruta, acrescentamos música e sistema mais complexo de upgrades
