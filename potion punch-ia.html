@@ -334,7 +334,7 @@
         // todas as configurações para cada clientes estão aqui
         function spawnClient() {
 
-            // do {
+            do {
                  // se a quantidade de clientes for igual ou maior q a quantidade máxima, retorna, até dar falso nessa condição
                 if ((clients.length >= maxClients)) return;
 
@@ -377,18 +377,18 @@
 
                 const clientIndex = clients.length;
 
-                setTimeout(() => {
-                    clientDiv.style.left = `${100 + clientIndex * 120}px`;
-                }, 100);
+                // setTimeout(() => {
+                //     clientDiv.style.left = `${100 + clientIndex * 120}px`;
+                // }, 100);
 
                 clientDiv.addEventListener('click', () => {
                     handleClientClick(clientDiv);
                 });
 
-                // clients.push(clientDiv);
-            // } 
+                clients.push(clientDiv);
+            } 
             
-            // while (clients.lenght <= 6)
+            while (clients.length <= 6)
 
            
         }
@@ -409,6 +409,7 @@
                     clientDiv.style.left = '1000px';
                     setTimeout(() => {
                         gameArea.removeChild(clientDiv);
+                        // tira os clientes do cliente
                         clients.splice(clients.indexOf(clientDiv), 1);
                         spawnClientAfterDelay();
                     }, 1000);
