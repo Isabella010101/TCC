@@ -184,9 +184,7 @@
             }
         }
 
-        // ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
-
-        // ------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
+        // -------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         // dispenser de cores
 
         
@@ -242,7 +240,7 @@
             }
         });
 
-        // --------------------------------------------------------------------------------------------------------
+        // ---------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------
         // lixo
 
         trash.addEventListener('click', () => {
@@ -299,31 +297,25 @@
 
             do {
             
-            //posição pro personagem, gera UM space between diferente multiplicando por um numero aleatório
-            clientePositionRandom = Math.floor(Math.random() * clientPositions.length);
+                //posição pro personagem, gera UM space between diferente multiplicando por um numero aleatório
+                clientePositionRandom = Math.floor(Math.random() * clientPositions.length);
 
-            personagemRandom = Math.floor(Math.random() * personagens.length)
+                personagemRandom = Math.floor(Math.random() * personagens.length)
             
-            } while (clients.includes(personagens[personagemRandom]) || posicoesUsadas.includes(clientPositions[clientePositionRandom]))
+            } while (
+                clients.some(client => client.textContent === personagens[personagemRandom]) || 
+                posicoesUsadas.includes(clientPositions[clientePositionRandom])
+            );
 
-            clients.push(personagens[personagemRandom])
-            posicoesUsadas.push(clientPositions[clientePositionRandom])
-
-
-            //definições de clientes
-            // cria um div do cliente
-            // const clientDiv = document.createElement('div');
-            // coloca a classe do div = client
-            // clientDiv.classList.add('client');
-
-            // clientDiv.textContent = personagens[personagemRandom];
-            // clientDiv.style.left = `${clientPositions[clientePositionRandom]}px`;
-            // clientDiv.style.top = '100px';
+            // Adiciona o personagem e a posição à lista de usados
+             posicoesUsadas.push(clientPositions[clientePositionRandom]);
 
             return {
                 nome: personagens[personagemRandom],
                 posicao: clientPositions[clientePositionRandom]
             };
+
+            
             
         }
 
@@ -334,68 +326,70 @@
         // todas as configurações para cada clientes estão aqui
         function spawnClient() {
 
-            do {
-                 // se a quantidade de clientes for igual ou maior q a quantidade máxima, retorna, até dar falso nessa condição
-                if ((clients.length >= maxClients)) return;
+            console.log('qutndade de clientes: ', clients.length+1);
 
-                // cria um div do cliente
-                const clientDiv = document.createElement('div');
-                // coloca a classe do div = client
-                clientDiv.classList.add('client');
+            
 
+            // se a quantidade de clientes for igual ou maior q a quantidade máxima, retorna, até dar falso nessa condição
+            if ((clients.length >= maxClients)) return;
 
-                const clienteInfo = clienteRandom();
-
-                clientDiv.textContent = clienteInfo.nome;
-                clientDiv.style.left = `${clienteInfo.posicao}px`;
-                clientDiv.style.top = '100px';
+            // cria um div do cliente
+            const clientDiv = document.createElement('div');
+            // coloca a classe do div = client
+            clientDiv.classList.add('client');
 
 
-                // cores possíveis
-                const possibleColors = ['red', 'blue', 'yellow', 'orange', 'green', 'purple', 'brown'];
+            const clienteInfo = clienteRandom();
 
-                const orderSize = Math.floor(Math.random() * 3) + 1;
+            clientDiv.textContent = clienteInfo.nome;
+            clientDiv.style.left = `${clienteInfo.posicao}px`;
+            clientDiv.style.top = '100px';
 
-                let order = [];
-                for (let i = 0; i < orderSize; i++) {
+
+            // cores possíveis
+            const possibleColors = ['red', 'blue', 'yellow', 'orange', 'green', 'purple', 'brown'];
+
+            const orderSize = Math.floor(Math.random() * 3) + 1;
+
+            let order = [];
+            for (let i = 0; i < orderSize; i++) {
                     const randomColor = possibleColors[Math.floor(Math.random() * possibleColors.length)];
                     order.push(randomColor);
-                }
+            }
 
-                const textodiv = document.createElement('div');
-                textodiv.classList.add('texto');
+            const textodiv = document.createElement('div');
+            textodiv.classList.add('texto');
 
-
-
-                clientDiv.dataset.order = JSON.stringify(order);
-                clientDiv.dataset.progress = "0";
-                textodiv.textContent = order.join(', ');
-
-                gameArea.appendChild(clientDiv);
-                clientDiv.appendChild(textodiv);
-                clientDiv.style.flexDirection = "column";
-
-                const clientIndex = clients.length;
-
-                // setTimeout(() => {
-                //     clientDiv.style.left = `${100 + clientIndex * 120}px`;
-                // }, 100);
-
-                clientDiv.addEventListener('click', () => {
-                    handleClientClick(clientDiv);
-                });
-
-                clients.push(clientDiv);
-            } 
             
-            while (clients.length <= 6)
+            clientDiv.dataset.order = JSON.stringify(order);
+            clientDiv.dataset.progress = "0";
+            textodiv.textContent = order.join(', ');
 
+            gameArea.appendChild(clientDiv);
+            clientDiv.appendChild(textodiv);
+            clientDiv.style.flexDirection = "column";
+
+            const clientIndex = clients.length;
+
+            clientDiv.addEventListener('click', () => {
+                handleClientClick(clientDiv);
+            });
+
+            // let pedido = pedido++;
+
+            clients.push(clientDiv);
+
+            
            
         }
 
         function handleClientClick(clientDiv) {
             let order = JSON.parse(clientDiv.dataset.order);
             let progress = parseInt(clientDiv.dataset.progress);
+
+            console.log('Progresso atual: ', progress, 'Pedido: ', order, 'total: '
+
+            );
 
             let bowlColor = getCurrentBowlColor();
 
@@ -406,24 +400,71 @@
                 resetBowl();
 
                 if (progress >= order.length) {
+
+                    console.log('Pedido completo, removendo cliente:', clientDiv.textContent);
+
                     clientDiv.style.left = '1000px';
                     setTimeout(() => {
-                        gameArea.removeChild(clientDiv);
-                        // tira os clientes do cliente
-                        clients.splice(clients.indexOf(clientDiv), 1);
-                        spawnClientAfterDelay();
-                    }, 1000);
-                }
-            } else {
-                showMessage("Bebida errada!");
-            }
-        }
+                        
 
-        function spawnClientAfterDelay() {
-            let delay = Math.random() * 1000 + 1000;
-            setTimeout(() => {
+                        // Remove o cliente do DOM e da lista
+                        if (gameArea.contains(clientDiv)) {
+                            
+                            console.log('Removendo cliente:', clientDiv.textContent);
+                            gameArea.removeChild(clientDiv);
+                        }                       
+                        // atualiza a lista de clientes
+                        clients = clients.filter(client => client !== clientDiv);
+
+                        // mostra a quantidade de clientes restantes para depuração
+                        console.log('Clientes restantes:', clients.length);
+
+                        // chama a função para spawnar um novo cliente após um atraso
+                        console.log("Cliente atendido: ", clientDiv.textContent);
+
+                        verificarAgir();
+                        // spawnClient();
+                    }, 1000);
+                
+                } else {
+                    showMessage("Bebida errada!");
+                }   
+            }
+        } 
+        
+        // verificar se tem espaço, se tiver, novo client, senão, espera abrir espaço
+        function verificarAgir() {
+
+            console.log("Verificando espaço para novos clientes...");
+            console.log("Clientes ativos:", clients.length, "Máximo permitido:", maxClients);
+
+            // if (clients.length < maxClients) {
+            //     setInterval(() => { 
+
+            //         console.log("Spawnando novo cliente...");
+
+            //         spawnClient();
+
+            //     }, 1000);
+
+            // } else {
+            //     console.log("Máximo de clientes atingido.");
+            //     // Aqui você pode implementar uma lógica para esperar que um cliente saia antes de spawnar um novo
+            //     while (clients.length === maxClients) {
+            //         console.log("Aguardando espaço para novo cliente...");
+
+            //     }
+                
+            //     return verificarAgir();
+            // }
+
+            if (clients.length < maxClients) {
+                console.log("Spawnando novo cliente...");
                 spawnClient();
-            }, delay);
+            } else {
+                console.log("Máximo de clientes atingido. Aguardando espaço...");
+                setTimeout(verificarAgir, 1000); // Recheca após 1 segundo
+            }
         }
 
         function resetBowl() {
@@ -435,11 +476,8 @@
             spawnClient();
         }
 
-        setInterval(() => { 
-            if (clients.length < maxClients) {
-                spawnClient();
-            }
-        }, Math.random() * 2000 + 5000);
+        
+
     </script>
 
 </body>

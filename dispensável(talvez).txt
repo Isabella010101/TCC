@@ -1,0 +1,55 @@
+// function spawnClientAfterDelay() {        
+        //     if (clients.length < maxClients) {
+
+        //         console.log("Spawnando novo cliente...");
+
+        //         // Gera um atraso aleatório entre 500ms e 1000ms
+        //         let delay = Math.random() * 500 + 500;
+        //         setTimeout(() => {
+        //             spawnClient();
+        //         }, delay);
+        //     } else {
+        //         console.log("Máximo de clientes atingido.");
+        //     }
+        // }
+
+
+
+// client random
+            // while (clients.includes(personagens[personagemRandom]) || posicoesUsadas.includes(clientPositions[clientePositionRandom]))
+
+            // clients.push(personagens[personagemRandom])
+            // posicoesUsadas.push(clientPositions[clientePositionRandom])
+
+            // return {
+            //     nome: personagens[personagemRandom],
+            //     posicao: clientPositions[clientePositionRandom]
+            // };
+
+spawn client
+// remove clientes que já saíram do jogo
+            // clients = clients.filter(client => gameArea.contains(client));
+
+
+client click
+// gameArea.removeChild(clientDiv);
+                        // // tira os clientes do cliente
+                        // clients.splice(clients.indexOf(clientDiv), 1);
+                        // spawnClientAfterDelay();
+
+
+set interval
+// Math.random() * 500 + 500
+
+
+// setInterval(() => { 
+        //     if (clients.length < maxClients) {
+
+        //         console.log("Spawnando novo cliente...");
+
+        //         spawnClient();
+
+        //     } else {
+        //         console.log("Máximo de clientes atingido.");
+        //     }
+        // }, 1000);
