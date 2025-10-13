@@ -1,0 +1,402 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>PengGo!</title>
+  <style>
+    body, html {
+      margin: 0; padding: 0; height: 100%; overflow: hidden;
+      display: flex; justify-content: center; align-items: center;
+      user-select: none;
+    }
+
+    #game {
+      display: grid;
+      width: 100vw;
+      height: 100vh;
+      position: relative;
+      background-image: url(restaurante.png);
+      background-size: 70%;
+      background-repeat: no-repeat;
+      background-position: center;
+    }
+
+    #player, #crazyfrog, #amor {
+      cursor: inherit;
+    }
+
+    #kitchen {
+      display: grid;
+      width: 100vw;
+      height: 100vh;
+      position: absolute;
+      background-image: url(kitchen-counter.png);
+      background-size: 75%;
+      background-repeat: no-repeat;
+      background-position: center;
+      display: none;
+      cursor: url(mao-normal-cursor.png), auto;
+    }
+
+    #player {
+      position: absolute;
+      width: 3%;
+      height: 12.5%;
+      transition: 0.1s;
+    }
+
+    #crazyfrog {
+      position: absolute;
+      width: 5%;
+      height: 10%;
+    }
+
+    #pote1, #pote2{
+      width: 50px;
+      height: 50px;
+      position: absolute;
+      background-size: cover;
+    }
+
+    #pote1 {
+      background-image: url(beijinho.png);
+    }
+
+    #pote2 {
+      background-image: url(caldoamor.png);
+    }
+    
+
+    #morango {
+      height: 396px;
+      width: 363px;
+      position: absolute;
+      background-size: cover;
+      rotate: -90deg;
+    }
+
+    #folha {
+      height: 120px;
+      width: 300px;
+      position: absolute;
+      background-size: cover;
+      rotate: -78deg;
+      background-image: url(morango-folha.png);
+    }
+
+    #folhatarget {
+      height: 200px;
+      width: 200px;
+      position: absolute;
+    }
+
+    
+
+    .stand , .standa1, .StandU, .StandD, .StandL, .StandR, .MoveU, .MoveD, .MoveL, .MoveR, .frogstand, .frogblink1, .frogblink2, .frogblink3, .frogblink4 {background-size: cover;}
+
+    .stand {background-image: url(stand_default.png)}
+    .standa1 {background-image: url(stand_anim.png)}
+    .MoveU {background-image: url(move_U.png)}
+    .MoveD {background-image: url(move_D.png)}
+    .MoveL {background-image: url(move_L.png)}
+    .MoveR {background-image: url(move_R.png)}
+
+    .morango {background-image: url(morango.png);}
+    .morangobeijinho {background-image: url(morango-beijinho.png);}
+    .morangoamor {background-image: url(morango-amor.png);}
+
+    .frogstand {background-image: url(crazyfrog.png)}
+    .frogblink1 {background-image: url(crazyfrog1.png)}
+    .frogblink2 {background-image: url(crazyfrog2.png)}
+    .frogblink3 {background-image: url(crazyfrog3.png)}
+    .frogblink4 {background-image: url(crazyfrog4.png)}
+
+  </style>
+</head>
+<body>
+
+<audio id="cytus" src="Relaxed Scene.mp3" autoplay></audio>
+
+
+<div id="game">
+  <div id="crazyfrog" class="frogstand"></div>
+  <div id="player" class="stand"></div>
+</div>
+<div id="kitchen">
+  <div id="morango" class="morango"></div>
+  <div id="folha" draggable="true"></div>
+  <div id="folhatarget"></div>
+  <div id="pote1" draggable="true"></div>
+  <div id="pote2" draggable="true"></div>
+</div>
+
+
+<script>
+  const pote1 = document.getElementById('pote1');
+  const pote2 = document.getElementById('pote2');
+  const morango = document.getElementById('morango');
+  const folha = document.getElementById('folha');
+  const folhatarget = document.getElementById('folhatarget');
+  const player = document.getElementById('player');
+  const crazyfrog = document.getElementById('crazyfrog');
+  const game = document.getElementById('game');
+  const kitchen = document.getElementById('kitchen');
+  const audio = document.getElementById('cytus');
+
+  const cols = 32;
+  const rows = 13;
+  const cellSize = 40;
+  
+  let moveQ = 0;
+  let amorQ = 0;
+  let beijQ = 0;
+
+
+  let playerPos = {
+    col: Math.floor(cols / 2),
+    row: Math.floor(rows / 2),
+  };
+
+  function updatePlayerPosition() {
+    player.style.left = playerPos.col * cellSize + "px";
+    player.style.top = playerPos.row * cellSize + "px";
+  }
+
+  function setPosition() {
+    crazyfrog.style.left = 13 * cellSize + "px";
+    crazyfrog.style.top = 7 * cellSize + "px";
+
+    morango.style.left = 10 * cellSize + "px";
+    morango.style.top = 4 * cellSize + "px";
+
+    folha.style.left = 6 * cellSize + "px";
+    folha.style.top = 6.8 * cellSize + "px";
+
+    folhatarget.style.left = 3 * cellSize + "px";
+    folhatarget.style.top = 5 * cellSize + "px";
+
+    pote1.style.left = 22 * cellSize + "px";
+    pote1.style.top = 3 * cellSize + "px";
+
+    pote2.style.left = 25 * cellSize + "px";
+    pote2.style.top = 3 * cellSize + "px";
+  }
+
+  pote1.addEventListener('dragstart', e => {
+    e.dataTransfer.setData('doce', 'pote1'); // marca o item
+  });
+
+  pote2.addEventListener('dragstart', e => {
+    e.dataTransfer.setData('doce', 'pote2'); // marca o item
+  });
+
+  function createTargets() {
+  for (let i = 1; i <= 10; i++) {
+    const element = document.createElement("div");
+    element.id = "target" + i;
+    element.style.zIndex = 1000;
+    element.dataset.beij = 0;
+    element.dataset.amor = 0;
+    element.style.width = "50px";
+    element.style.height = "50px";
+    element.style.position = "absolute";
+    element.style.left = (i + 10) * cellSize + "px";
+    element.style.top  = 8 * cellSize + "px";
+    element.style.backgroundColor = "red";
+
+
+    element.addEventListener('dragover', e => {
+      e.preventDefault();
+
+      const data = e.dataTransfer.getData('doce');
+        
+      if (element.dataset.beij === "0") {
+        element.dataset.beij = "1";
+        beijQ = beijQ + 1;
+        element.style.backgroundColor = "cyan";
+
+        if (beijQ === 10) {
+          morango.classList.remove("morango");
+          morango.classList.add("morangobeijinho");
+        }
+      }
+      
+      if (beijQ === 10 && element.dataset.amor === "0") {
+        element.dataset.amor = "1";
+        amorQ = amorQ + 1;
+        element.style.backgroundColor = "lightgreen";
+
+        if (amorQ === 10) {
+          morango.classList.remove("morangobeijinho");
+          morango.classList.add("morangoamor");
+        }
+      }
+    });
+
+    kitchen.appendChild(element);
+  }
+}
+
+  folha.addEventListener('dragstart', e => {
+    console.log('dragstart: começou o arrasto');
+    e.dataTransfer.setData('text/plain', 'folha'); // marca o item
+  });
+
+  folhatarget.addEventListener('dragover', e => {
+    e.preventDefault();
+  });
+
+
+  folhatarget.addEventListener('drop', e => {
+    e.preventDefault();
+    const data = e.dataTransfer.getData('text/plain');
+    if(data === 'folha') {
+      folhatarget.style.backgroundImage = "url(morango-folha.png)"
+      folhatarget.style.height = "120px"
+      folhatarget.style.width = "300px"
+      folhatarget.style.backgroundSize = "cover"
+      folha.style.display = "none"
+    }
+  });
+  
+
+  createTargets();
+  setPosition();
+  updatePlayerPosition();
+
+  // const col = Math.floor(Math.random() * cols);
+  // const row = Math.floor(Math.random() * rows);
+  // const key = col + ',' + row;
+  // pode ser necessário
+
+  function movePlayer(dx, dy, direction) {
+
+    player.classList.add(direction);
+
+    const newCol = playerPos.col + dx;
+    const newRow = playerPos.row + dy;
+
+
+    if (newCol < 0 || newCol >= cols || newRow < 0 || newRow >= rows) return;
+
+    playerPos.col = newCol;
+    playerPos.row = newRow;
+    updatePlayerPosition();
+
+    setTimeout(() => {
+      player.classList.remove(direction);
+    }, 100);
+
+    const playerX = playerPos.col * cellSize + cellSize / 2;
+    const playerY = playerPos.row * cellSize + cellSize / 2;
+
+    // posição do ponto que abre a cozinha (ex.: 12.5, 4)
+    const kitchenX = 12 * cellSize + cellSize / 2;
+    const kitchenY = 2 * cellSize + cellSize / 2;
+
+    // distância euclidiana
+    const distance = Math.sqrt(
+      Math.pow(playerX - kitchenX, 2) +
+      Math.pow(playerY - kitchenY, 2)
+    );
+
+      if (distance <= 20) {
+        kitchen.style.display = "block";
+        game.style.display = "none"
+
+      } else if (distance > 20) {
+        kitchen.style.display = "none";
+        game.style.display = "block"
+      }
+
+
+      
+    }
+
+  
+  function standAnimations() {
+    setTimeout(() => {
+      player.classList.remove("stand");
+      player.classList.add("standa1");
+
+      setTimeout(() => {
+      player.classList.remove("standa1");
+      player.classList.add("stand");
+    }, (Math.random() * (30000 - 1000 + 1) + 1000));
+
+    }, (Math.random() * (10000 - 5000 + 1) + 5000));
+  }
+
+    
+  function frogAnimations() {
+
+    setTimeout(() => {
+    crazyfrog.classList.remove("frogstand");
+    crazyfrog.classList.add("frogblink1");
+    }, (100));
+
+    setTimeout(() => {
+    crazyfrog.classList.remove("frogblink1");
+    crazyfrog.classList.add("frogblink2");
+    }, (200));
+
+    setTimeout(() => {
+    crazyfrog.classList.remove("froblink2");
+    crazyfrog.classList.add("frogblink3");
+    }, (300));
+
+    setTimeout(() => {
+    crazyfrog.classList.remove("frogblink3");
+    crazyfrog.classList.add("frogblink4");
+    }, (400));
+
+    setTimeout(() => {
+    crazyfrog.classList.remove("frogblink4");
+    crazyfrog.classList.add("frogblink3");
+    }, (500));
+
+    setTimeout(() => {
+    crazyfrog.classList.remove("frogblink3");
+    crazyfrog.classList.add("frogblink2");
+    }, (600));
+
+    setTimeout(() => {
+    crazyfrog.classList.remove("frogblink2");
+    crazyfrog.classList.add("frogblink1");
+    }, (700));
+
+    setTimeout(() => {
+    crazyfrog.classList.remove("frogblink1");
+    crazyfrog.classList.add("frogstand");
+    }, (1000));
+  }
+
+  window.addEventListener('keydown', e => {
+    switch (e.key) {
+      case 'ArrowUp': case 'w': movePlayer(0, -1, "MoveU", "StandU"); break;
+      case 'ArrowDown': case 's': movePlayer(0, 1, "MoveD", "StandD"); break;
+      case 'ArrowLeft': case 'a': movePlayer(-1, 0, "MoveL", "StandL"); break;
+      case 'ArrowRight': case 'd': movePlayer(1, 0, "MoveR", "StandR"); break;
+    }
+  });
+
+
+  // window.addEventListener('keyup', e => {
+  //   switch (e.key) {
+  //     case 'ArrowUp': case 'w': moveHold(0, -1, "MoveU", "StandU"); break;
+  //     case 'ArrowDown': case 's': moveHold(0, 1, "MoveD", "StandD"); break;
+  //     case 'ArrowLeft': case 'a': moveHold(-1, 0, "MoveL", "StandL"); break;
+  //     case 'ArrowRight': case 'd': moveHold(1, 0, "MoveR", "StandR"); break;
+  //   }
+  // });
+
+
+  audio.play();
+  standAnimations();
+  frogAnimations();
+
+</script>
+
+</body>
+</html>

@@ -1,4 +1,4 @@
-# TCC
+# TCC - Trabalho de Conclusão de Curso
 ## Desenvolvendo um game apenas com js
 
 ## 📌 Índice
@@ -9,36 +9,26 @@
 
 ## 🎮 Sobre o Projeto
 
-Um jogo inspirado em Dungeons & Dragons, Potion Punch e Dinner Simulator da plataforma Roblox, com mecânicas simples.
-- Simulador
-
-- Cozinha
+Um jogo de culinárias focado na gameplay dentro da cozinha. Utilizamos Javascript - linguagem que vimos durante o curso - para a codificação, Krita para os desenhos, AnimeEffects para a animação e muita paixão para o desenvolvimento!
 
 ## 📖 Diário de Bordo
 
 ### Dia 1 
-Viemos com a ideia, procuramos exemplos e pensamos na estética do jogo
+Primeiro dia focado em pensar no TCC. O projeto foi separado em duas equipes, a de design e a programação.
 
-### Dia 2
-Tentamos decidir outras coisas, como a mecânica principal do jogo. Ainda não foi decidido se será um sistema de simulador ou cozinha
-Pegamos esse código e começamos a analisar. Gabriel com o simulador, Isabella com o sistema de cozinha.
+[Isabella](https://github.com/Isabella010101) - Scrum Master
 
-### Dia 3
+[Gabriel]() - Programador, focado na lógica da cozinha
 
-Depois de analisar, começamos a resolver problema no código, para fazer exatamenteo que queríamos.
- 1. Clientes sobrepondo outros clientes
- 2. Sobreposição de itens
- 3. ter que seguir a ordem dos itens pedidos pelo cliente
+[Pedro]() - Programador, focado na lógica dos clientes
 
-Hoje, na cozinha, conseguimos resolver o primeiro item e o segundo, utilizando uma lógica nova no spawn de clientes, porém, acrescentou outro problema:
- - Só recebe 6 clientes
+[Thalita]() - Design de gameplay
 
-No simulador, conseguimos melhorar a colisão do jogador com a fruta, acrescentamos música e sistema mais complexo de upgrades
+[Julia](https://github.com/J-Paiare) - Design dos personagens e animação
 
-### Dia 4
+[Alexya]() - Design dos personagens e outros elementos
 
-Tentei arrumar o problema dos 6 clientes, utilizando o copilot do vs code. Por um momento, mais clientes eram chamados constantemente, mesmo tendo 6 clientes na tela (o máximo). O processo de spawn deles era comentado no console, mas não apareciam graficamente. Após atender um dos clientes, por terem muitos outros spawnados, o programa travava. Foi identificado que era necessário definir um "else", para caso tenha atingido o máximo de clientes, pare de gerar outros novos, até surgir espaço. Coloquei um else com um console.log nele ara depurar o código, mas, após atinir o máximo e atender mais um cliente, o programa trava e o texto do console.log não aparece.
+[Leandro]() - Design dos personagens e cenário
 
-### Dia 5
+Focamos na base do jogo, pensando em questões como gameplay, receitas, cenários, elementos. 
 
-Pedi ajuda ao professor para verificar o protótipo e nos ajudar a lidar com os erros dele.
