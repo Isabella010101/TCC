@@ -55,6 +55,7 @@
     const gameArea = document.getElementById('game-area');
     const player = document.getElementById('player');
 
+    let clique = 0;
     let posX = 300; // posição inicial (meio)
     let posY = 200;
     let targetX = posX;
@@ -63,22 +64,27 @@
 
     // Atualiza posição do personagem a cada frame
     function update() {
-      const dx = targetX - posX;
-      const dy = targetY - posY;
-      //calcula a diferença de distância a ser percorrida horizontalmente e verticamente utilizando o teorema de pitágoras
-      const distance = Math.sqrt(dx * dx + dy * dy);
+        const dx = targetX - posX;
+        const dy = targetY - posY;
+        //calcula a diferença de distância a ser percorrida horizontalmente e verticamente utilizando o teorema de pitágoras
+        const distance = Math.sqrt(dx * dx + dy * dy);
 
-      // alterar velocidade junto com este
-      if (distance > 3) {
-        posX += (dx / distance) * speed;
-        posY += (dy / distance) * speed;
+        // alterar velocidade junto com este
+        if (distance > 3) {
 
-        player.style.left = posX + "px";
-        player.style.top = posY + "px";
+          posX += (dx / distance) * speed;
+          posY += (dy / distance) * speed;
 
-      }
+          player.style.left = posX + "px";
+          player.style.top = posY + "px";
+          clique = 1 
+          setTimeout(() => {
+              clique = 0
+            }, distance*3);
 
-      requestAnimationFrame(update);
+        }
+
+        requestAnimationFrame(update);
     }
 
     function posMouse(e) {
@@ -94,26 +100,27 @@
     });
 
     gameArea.addEventListener('click', (event) => {
-      const dx = targetX - posX;
-      const dy = targetY - posY;
-      const distance = Math.sqrt(dx * dx + dy * dy);
+            
+        const dx = targetX - posX;
+        const dy = targetY - posY;
+        const distance = Math.sqrt(dx * dx + dy * dy);
 
-      if (targetX < posX) {
-        player.src = "img/Jeca-correndoL.gif"
-        setTimeout(() => {
-          player.src = "img/Jeca-paradoL.gif"
-        }, distance*3);
-      } else {
-        player.src = "img/Jeca-correndoR.gif"
-        setTimeout(() => {
-          player.src = "img/Jeca-paradoR.gif"
-        }, distance*3);
+        if (targetX < posX) {
+          player.src = "img/Jeca-correndoL.gif"
+          setTimeout(() => {
+            player.src = "img/Jeca-paradoL.gif"
+          }, distance*3);
+        } else {
+          player.src = "img/Jeca-correndoR.gif"
+          setTimeout(() => {
+            player.src = "img/Jeca-paradoR.gif"
+          }, distance*3);
+        }
       }
-
-    });
+      
+    );
 
     
-
     update(); // inicia loop de animação
   </script>
 </body>
