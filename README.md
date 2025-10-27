@@ -16,17 +16,17 @@ Um jogo de culinárias focado na gameplay dentro da cozinha. Utilizamos Javascri
 ### Dia 1 
 Primeiro dia focado em pensar no TCC. O projeto foi separado em duas equipes, a de design e a programação.
 
-[Isabella](https://github.com/Isabella010101) - Scrum Master
+[Isabella](https://github.com/Isabella010101) - Scrum Master e programador
 
-[Gabriel]() - Programador, focado na lógica da cozinha
+[Gabriel](https://github.com/Gabriel050505) - Programador
 
-[Pedro]() - Programador, focado na lógica dos clientes
+[Pedro]() - Programador
 
-[Thalita]() - Design de gameplay
+[Thalita](https://github.com/ThalitaJack08) - Design de gameplay e figma
 
 [Julia](https://github.com/J-Paiare) - Design dos personagens e animação
 
-[Alexya]() - Design dos personagens e outros elementos, futuramente produzirá a música do jogo também
+[Alexya]() - Design dos personagens, animação e desenho de outros elementos, futuramente produzirá a música do jogo também
 
 [Leandro]() - Design dos personagens e cenário
 
@@ -51,4 +51,11 @@ Programação da tela inicial do jogo.
 Desenvolvimento da gameplay das comidas.
 Arte de novos personagens e comidas.
 Desenvolvimento da música do jogo.
+
+### Dia 5
+Junção do layout "fixo" do jogo com as mecânicas de movimentação do personagem.
+Programação da colisão.
+Figma com o protótipo do layout do jogo.
+Desenho dos personagens.
+Desenho da tela inicial.
 
