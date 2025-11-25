@@ -1,7 +1,7 @@
 * {
   -webkit-user-drag: none;
   user-select: none;
-  cursor: url(../img/dedao.png), default;
+  cursor: url(img/dedao.png), default;
 }
 
 html, body {
@@ -14,7 +14,7 @@ body {
   padding: 0;
   font-family: sans-serif;
   /* background-color: #f3d86a; */
-  background: url('../img-cenario/fundi.jpg');
+  background: url('img-cenario/fundi.jpg');
   width: 100vw;
   height: 100vh;
 }
@@ -141,6 +141,10 @@ nav button:active {
   left: 410px;
   top: 140px;
 
+  z-index: 3;
+}
+
+#mesa1-guardar .cliente {
   z-index: 2;
 }
 
@@ -148,6 +152,10 @@ nav button:active {
   left: 370px;
   top: 350px;
 
+  z-index: 8;
+}
+
+#mesa2-guardar .cliente {
   z-index: 7;
 }
 
@@ -155,10 +163,24 @@ nav button:active {
   left: 750px;
   top: 350px;
 
+  z-index: 8;
+}
+
+#mesa3-guardar .cliente {
   z-index: 7;
 }
 
+#mesa1-guardar img {
+  z-index: 3;
+}
 
+#mesa2-guardar img {
+  z-index: 8;
+}
+
+#mesa3-guardar img {
+  z-index: 8;
+}
 
 /*====================================================================================================================================================================================================================================================================================================================================================================GAME AREA*/
 
@@ -217,20 +239,16 @@ nav button:active {
   z-index: 2
 }
 
-#parede:hover {
-  cursor: url(../img/Jeca-correndoL\ copy.gif), default;
-}
-
 #mesa2 {
   height: auto;
   width: 150px;
-  z-index: 4;
+  z-index: 5;
 }
 
 #mesa3 {
   height: auto;
   width: 150px;
-  z-index: 4;
+  z-index: 5;
 }
 
 #parede {

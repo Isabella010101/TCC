@@ -16,24 +16,24 @@ include ("protect.php");
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link rel="stylesheet" href="style.css"
-        <link rel="icon" href="../img/jeca-logo.png">
+        <link rel="icon" href="img/jeca-logo.png">
     </head>
     <body>
         <div id="game">
             <header>
                 <div class="log">
-                    <img src="../img/icon.png" alt=""> 
+                    <img src="img/icon.png" alt=""> 
                     
                 </div>
                 <nav>
-                    <button id="btnAbrirConfig"><img src="../img/iconeEng2.png" alt=""></button>
-                    <button id="btnAbrirLoja"><img src="../img/iconeCar.png" alt=""></button>
-                    <button id="btnAbrirReceitas"><img src="../img/iconeRec.png" alt=""></button>
-                    <button id="btnAbrirPerfil"><img src="../img/iconeJeca.png" alt=""></button>
+                    <button id="btnAbrirConfig"><img src="img/iconeEng2.png" alt=""></button>
+                    <button id="btnAbrirLoja"><img src="img/iconeCar.png" alt=""></button>
+                    <button id="btnAbrirReceitas"><img src="img/iconeRec.png" alt=""></button>
+                    <button id="btnAbrirPerfil"><img src="img/iconeJeca.png" alt=""></button>
                 </nav>
 
                 <div class="dinheiro-display">
-                    <span><img src="../img/saco.png" alt=""></span>
+                    <span><img src="img/saco.png" alt=""></span>
                     <span class="ponto">:</span>
                     <span id="dinheiro-quantidade">25</span>
                 </div>
@@ -44,17 +44,17 @@ include ("protect.php");
             <container id="container">
             <!-- colisão -->
             <div class="mesa-guardar" id="mesa1-guardar">
-                <img id="mesa1" src="../img-cenario/Mesa.png">
+                <img id="mesa1" src="img-cenario/Mesa.png">
                 <!-- <div id="mesa1-cliente"></div> -->
             </div>
 
             <div class="mesa-guardar" id="mesa2-guardar">
-                <img id="mesa2" src="../img-cenario/Mesa.png">
+                <img id="mesa2" src="img-cenario/Mesa.png">
                 <!-- <div id="mesa2-cliente"></div> -->
             </div>
 
             <div class="mesa-guardar" id="mesa3-guardar">
-                <img id="mesa3" src="../img-cenario/Mesa.png">
+                <img id="mesa3" src="img-cenario/Mesa.png">
                 <!-- <div id="mesa3-cliente"></div> -->
             </div>
 
@@ -64,7 +64,7 @@ include ("protect.php");
             <div id="chao"></div>
 
 
-            <img id="janela" src="../img-cenario/Janela.gif">
+            <img id="janela" src="img-cenario/Janela.gif">
 
             </container>
 
@@ -74,31 +74,31 @@ include ("protect.php");
 
 
                 
-                <img id="espatula" src="../img/espatula.png" draggable="true">
+                <img id="espatula" src="img/espatula.png" draggable="true">
 
                 <!-- Ingredientes do brigadeiro -->
-                <img id="leitecon" src="../img-ingrediente/Leite condensado.png" draggable="true">
-                <img id="chocolate" src="../img-ingrediente/Achocolatado.png" draggable="true">
-                <img id="chocolateColher" src="../img-ingrediente/Achocolatado-colher.png" draggable="true">
-                <img id="manteiga" src="../img-ingrediente/Manteiga.png" draggable="true">
-                <img id="manteigaColher" src="../img-ingrediente/Manteiga-colher.png" draggable="true">
+                <img id="leitecon" src="img-ingrediente/Leite condensado.png" draggable="true">
+                <img id="chocolate" src="img-ingrediente/Achocolatado.png" draggable="true">
+                <img id="chocolateColher" src="img-ingrediente/Achocolatado-colher.png" draggable="true">
+                <img id="manteiga" src="img-ingrediente/Manteiga.png" draggable="true">
+                <img id="manteigaColher" src="img-ingrediente/Manteiga-colher.png" draggable="true">
 
-                <img id="panela" src="../img-cozinha/PANELLALAAAA.png">
+                <img id="panela" src="img-cozinha/PANELLALAAAA.png">
                 <div id="panela-fundo"></div>
 
-                <img id="good" src="../img/good.png">
-                <img id="great" src="../img/great.png">
-                <img id="awesome" src="../img/awesome.png">
-                <img src="../img-cenario/cozinha.png" alt="fundo" class="fundo">
+                <img id="good" src="img/good.png">
+                <img id="great" src="img/great.png">
+                <img id="awesome" src="img/awesome.png">
+                <img src="img-cenario/cozinha.png" alt="fundo" class="fundo">
             </div>
 
 
             <!-- game area -->
             <div id="game-area">
 
-                <img src="../img/Jeca-paradoR.gif" id="player" class="player" alt="Player">
+                <img src="img/Jeca-paradoR.gif" id="player" class="player" alt="Player">
 
-                <img src="../img-cenario/fundo.png" alt="fundo" class="fundo">
+                <img src="img-cenario/fundo.png" alt="fundo" class="fundo">
             </div>
                 
         </main>
@@ -147,7 +147,7 @@ include ("protect.php");
   <div id="perfil" class="modal">
     <div class="modal-content">
       <span class="fechar">&times;</span>
-      <h2><img src="../img/iconeJeca.png" alt="Jeca" style="width: 30px; margin-top: 10px;"> Perfil</h2>
+      <h2><img src="img/iconeJeca.png" alt="Jeca" style="width: 30px; margin-top: 10px;"> Perfil</h2>
 
 
       <p>   </p>

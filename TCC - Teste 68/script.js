@@ -97,8 +97,8 @@ function update() {
     } else if (distance <= 3 && move === true) {
         move = false;
         if (player) {
-            if (endposition === "left") player.src = "../img/Jeca-paradoL.gif";
-            if (endposition === "right") player.src = "../img/Jeca-paradoR.gif";
+            if (endposition === "left") player.src = "img/Jeca-paradoL.gif";
+            if (endposition === "right") player.src = "img/Jeca-paradoR.gif";
         }
     }
     requestAnimationFrame(update);
@@ -116,10 +116,10 @@ if (gameArea) {
 
         if (player) {
             if (targetX < posX) {
-                player.src = "../img/Jeca-correndoL.gif";
+                player.src = "img/Jeca-correndoL.gif";
                 endposition = "left";
             } else {
-                player.src = "../img/Jeca-correndoR.gif";
+                player.src = "img/Jeca-correndoR.gif";
                 endposition = "right";
             }
         }
@@ -234,7 +234,7 @@ function criarCliente() {
 
     // Define qual personagem é
     const numSprite = selecionarNum();
-    clientDiv.src = `../img/${clientImg[numSprite]}`;
+    clientDiv.src = `img/${clientImg[numSprite]}`;
     clientDiv.dataset.sprite = JSON.stringify(numSprite); // Guarda o ID
 
     if (gameArea) gameArea.appendChild(clientDiv);
@@ -299,7 +299,7 @@ function tentarSentarCliente(mesaElemento, posDireita, posEsquerda) {
 
     // cliente.style.zIndex = "999";   // Por algum motivo o localhost nao ta atualizando a mudaça de zIndex = 2 pra zIndex = 999 🫠
     //// Em vez de cliente.style.zIndex = "999";
-    cliente.style.setProperty('z-index', '9999', 'important');
+    // cliente.style.setProperty('z-index', '7', 'important');
 
     // 4. Anima e limpa seleção
     mudarSprite(cliente);
@@ -316,7 +316,7 @@ function moverCliente(cliente, mesa, left, top) {
     // Coloca imagem de sentado
     const spriteID = parseInt(cliente.dataset.sprite, 10);
     if (!Number.isNaN(spriteID)) {
-        cliente.src = `../img/${clientMesa[spriteID][0]}`;
+        cliente.src = `img/${clientMesa[spriteID][0]}`;
     } else {
         console.warn("Opção inválida para sprite")
     }
@@ -330,7 +330,7 @@ function mudarSprite(cliente) {
     if (cliente._spriteIntervalId) clearInterval(cliente._spriteIntervalId);
     
     cliente._spriteIntervalId = setInterval(() => {
-        cliente.src = `../img/${clientMesa[spriteID][1]}`; // Pedindo
+        cliente.src = `img/${clientMesa[spriteID][1]}`; // Pedindo
 
         
     }, (Math.random() * 5000) + 5000);
@@ -348,8 +348,8 @@ window.addEventListener("load", () => {
     // Configura os cliques nas mesas (APENAS UMA VEZ)
     if (mesa1 && mesa2 && mesa3) {
         mesa1.onclick = () => tentarSentarCliente(mesa1e, "115px", "-75px");
-        mesa2.onclick = () => tentarSentarCliente(mesa2e, "150px", "-75px");
-        mesa3.onclick = () => tentarSentarCliente(mesa3e, "150px", "-75px");
+        mesa2.onclick = () => tentarSentarCliente(mesa2e, "145px", "-75px");
+        mesa3.onclick = () => tentarSentarCliente(mesa3e, "145px", "-75px");
         console.log("✅ Mesas Configuradas.");
     } else {
         console.error("❌ Erro: Mesas não encontradas no HTML.");
